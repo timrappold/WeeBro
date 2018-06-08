@@ -22,11 +22,11 @@ The minimum viable product is a classifier that  identfies a baby's (in particul
 
 * **Existing audio collections on Github**: There are a number of audio libraries available from similar projects, including various degress of baby cries, user-submitted labeled data from boys and girls in various ages, and background noises.
 
-  | Repo                                                     | Types of Labeled Data                                        | File Types |
-  | -------------------------------------------------------- | ------------------------------------------------------------ | ---------- |
-  | [mystesPF](https://github.com/mystesPF)                  | Diverse set of sound files including several samples each from the following categories: crying babies, snoring, glass breaking, dog barking, chirping birds, car horn, silence, noise, thunderstorm, etc. | *.ogg      |
-  | [giulbia](https://github.com/giulbia/baby_cry_detection) |                                                              |            |
-  |                                                          |                                                              |            |
+  | Repo                                                      | Types of Labeled Data                                        | File Types   |
+  | --------------------------------------------------------- | ------------------------------------------------------------ | ------------ |
+  | [mystesPF](https://github.com/mystesPF)                   | Diverse set of sound files including several samples each from the following categories: crying babies, snoring, glass breaking, dog barking, chirping birds, car horn, silence, noise, thunderstorm, etc. | *.ogg        |
+  | [giulbia](https://github.com/giulbia/baby_cry_detection)  | 432 files of labeled data from the following four categories: `crying baby`, `silence`, `noise`, `baby laugh`. | *.ogg, *.wav |
+  | [donateacry](https://github.com/gveres/donateacry-corpus) | 1128 files of labeled sound files, all of which are cries from babies of various ages and genders, and with various causes (hungry, tired, pain, etc.) | *.caf, *.3gp |
 
   
 
