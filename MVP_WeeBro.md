@@ -32,7 +32,10 @@ The minimum viable product is a classifier that  identfies a baby's (in particul
 
 * **Audio from our daughter**: extract nightly audio from nest cam video.
 
+**Known Unknowns**: 
 
+- Not sure how to build live stream Nest video -> audio pipeline.
+- Not sure how to host live monitoring tool. May have to rely on computer being on/up to capture, or host an always-on AWS instance. Ask Brendan and Robert or Skip.
 
 ## Project Milestones
 
@@ -46,7 +49,7 @@ The minimum viable product is a classifier that  identfies a baby's (in particul
 
 
 
-2.) Personal Data validation (FRIDAY):
+2.) Personal Data validation (FRIDAY): **DONE**
 
 ​	Download and prep sound files from Nest [partially complete]
 
@@ -54,32 +57,72 @@ The minimum viable product is a classifier that  identfies a baby's (in particul
 
 
 
-3.) Validate Nest API (SUNDAY)
+3.) Validate Nest API (SUNDAY). **DONE**
+
+
 
 ​	Demonstrate that I can access camera video live stream, figure out how this works.
 
 
 
-4.) Demonstrate signal extraction and data formating (SUNDAY):
+4.) Demonstrate signal extraction and data formating (SUNDAY): **DONE**
 
 ​	Extract signals from 1-3 audio files using e.g. Librosa
 
-​	Set up training data table 
+​	Set up training data table. Focus on Giulbia's data first.
 
 
 
-5.) Build a first linear model (MONDAY)
+5.) Build a first linear model (MONDAY): **DONE**
 
-6.) Build a first live stream monitor (TUESDAY)
+- Transform/copy giulbia's data to .wav and move to data folder.
 
-6.) Build a first CNN (WEDNESDAY)
+6.) Build a first live stream monitor (TUESDAY) **DONE**
 
-7.) Build a first Flask app and Bokeh dashboard (THURSDAY)
+6.) Build a first CNN (WEDNESDAY) **NOT done**
 
-8.) Wrap up first prototype (FRIDAY - SUNDAY)
+7.) Build a first Flask app and Bokeh dashboard (THURSDAY) **NOT done**
 
-9.) Refine (Week 2: MONDAY - SUNDAY)
+8.) Wrap up first prototype (FRIDAY - SUNDAY) **NOT done**
 
-10.) Presentation (Week 3)
 
- 
+
+10.) TUESDAY:  build Linear Pipe. Have a serialized Pipe to call like so: 
+
+FitModel:
+
+for .wav in Set:
+
+Featurize(.wav)
+
+Productize:
+
+`X(431, 18) = Featurize(.wav)`, 
+
+`y_pred(1,) =  pipe.predict(X(431,18))`
+
+11.) WEDNESDAY: 
+
+12.) THURSDAY: Get ready to collect and evaluate streaming data. EC2??
+
+13.) FRIDAY:
+
+14.) SATURDAY:
+
+15.) SUNDAY:
+
+16.) MONDAY:
+
+
+
+.) Presentation (Week 3)
+
+
+
+
+
+
+
+*  Serialized model 
+* Data serving to clear out folder
+* Flask-bokeh

@@ -51,7 +51,7 @@ class RawAudioExtractor(object):
     Extract raw audio data from .wav/.ogg files or from pickle.
     """
 
-    ROOTPATH =
+    #ROOTPATH =
 
     def __init__(self, from_pickle=True):
         self.from_pickle_ = from_pickle
