@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 coding=utf-8
 Code Template
@@ -12,7 +12,7 @@ import librosa
 # from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import Imputer, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 # from sklearn_pandas import DataFrameMapper, GridSearchCV
 
@@ -49,19 +49,19 @@ def load_pickle(filename):
 
 
 def extract(from_pickle=False):
-
-
-    observations_path = '../data/pickles/observations.pkl'
-
     """
-    Extract the data set from upstream
+    Extract the sound files, return list of labeled (1=cry) tuples including
+    wav vec, the sound amplitude as a function of time.
     :return: observations
     :rtype: list of tuples (label, wav vec, sampling rate)
     """
+
+    observations_path = '../data/pickles/observations.pkl'
+
     logging.info('Begin extract')
 
     # Load the data set
-    observations = lib.load_titanic()  # replace with `observations`
+    # observations = lib.load_titanic()  # replace with `observations`
 
     # Subset observation for speedier test iterations
     # if lib.get_conf('test_run'):
@@ -74,10 +74,12 @@ def extract(from_pickle=False):
 
     if not from_pickle:
         sound_folder_root = '../data/trial_data/'
-        subfolders = ['crying', 'silence', 'noise', 'baby_laugh', 'aria_crying',
-                      'aria_other']
-        folder_paths = [sound_folder_root + subfolder + '/' for subfolder in
-                        subfolders]
+        sub_folders = ['crying', 'silence', 'noise', 'baby_laugh',
+                       'aria_crying', 'aria_other'
+                       ]
+
+        folder_paths = [sound_folder_root + sub_folder + '/' for sub_folder in
+                        sub_folders]
 
         observations = []
         for folder in folder_paths:
@@ -99,9 +101,16 @@ def extract(from_pickle=False):
 
 def transform(observations):
     """
-    Perform light feature transformation, ahead of feature transformation pipeline
-    :param observations:
+    Perform light feature transformation, ahead of feature transformation
+    pipeline. Cut all wav vecs to the same length to enforce uniformity. Then,
+    convert wav vec, the sound amplitude as a function of time, to
+    a variety of extracted features, such as Mel Frequency Cepstral Coeffs,
+    Root Mean Square Energy, Zero Crossing Rate, etc.
+
+    :param observations
+    :ptype: list of tuples (label, wav vec, sampling rate)
     :return:
+    :rtype:
     """
     logging.info('Begin transform')
 
@@ -141,16 +150,15 @@ def model(train, test):
         ('svc', SVC())
     ])
 
-    param_grid = {'svc__gamma': np.logspace(-9, 3, 1),
-                  'svc__C': np.logspace(-2, 10, 1),
-                  'svc__kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
-                  'svc__degree': range(2, 8)}
+    param_grid = {'svc__gamma': np.logspace(-4, 3, 1),
+                  'svc__C': np.logspace(-2, 3, 1),
+                  'svc__kernel': ['linear', 'rbf', 'sigmoid'],
+                  }
 
     trained_model = GridSearchCV(transformation_pipeline,
                                  param_grid=param_grid,
                                  scoring='accuracy',
                                  cv=5, n_jobs=-1)
-
 
     logging.info('Training model')
     trained_model.fit(train.copy(), y=train['survived'])

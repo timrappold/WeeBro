@@ -26,7 +26,7 @@ class AudioLoader(object):
         """
         Read audio file using librosa.load.
 
-        :return: audio_data (numpy.ndarray). 1-D array of the raw audio signal
+        :return: raw_audio_vec (numpy.ndarray). 1-D array of the raw audio signal
             in time.
         :rtype: numpy.ndarray
 
