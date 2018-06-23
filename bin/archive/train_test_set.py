@@ -29,10 +29,10 @@ def get_train_test_set(feature_version='feature_vector', from_pickle=True,
     :return: train_test_split (sklearn)
     """
 
-    pickle_path = '../data/pickles/train_test_sets.pkl'
+    pickle_path = '../data/pickles/train_test_sets_2.pkl'
 
     if not from_pickle:
-        sound_folder_root = '../data/trial_data/'
+        sound_folder_root = '../data/training_data/'
         subfolders = ['crying', 'silence', 'noise', 'baby_laugh',
                       'aria_crying', 'aria_other']
         folder_paths = [sound_folder_root + subfolder + '/' for subfolder in
@@ -73,7 +73,7 @@ def get_train_test_set(feature_version='feature_vector', from_pickle=True,
 
                         # feature vector is the 1D time average of feature
                         # matrix
-                        feature_vector, feature_matrix = f.engineer_features()
+                        feature_vector, feature_matrix = f.featurize()
 
                         label = int('crying' in folder)  # labeling by folder
                                                          # name

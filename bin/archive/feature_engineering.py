@@ -34,7 +34,7 @@ class Features(object):
         raw, _ = librosa.load(path, sr=self.RATE, mono=True)
         self.raw_audio_vec = raw[:self.VECLENGTH]
 
-    def engineer_features(self):
+    def featurize(self):
         """
         Extract features using librosa.feature. Convert wav vec, the sound
         amplitude as a function of time, to a variety of extracted features,
@@ -48,7 +48,7 @@ class Features(object):
 
         Each signal is cut into frames, features are computed for each frame and averaged [median].
         The numpy array is transformed into a data frame with named columns.
-        :param raw_audio_vec: the input signal samples with frequency 44.1 kHz
+        :param raw: the input signal samples with frequency 44.1 kHz
         :return: a numpy array (numOfFeatures x numOfShortTermWindows)
         """
 
