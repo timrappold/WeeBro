@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+"""
+Author: Tim Rappold
+
+This script contains the class Features, which processes all raw sound files
+(*.wav, *.ogg, likely other formats as well) into 1D and 2D tensors that can
+be used by machine learning applications.
+
+"""
+
 import os
 import numpy as np
 import logging
@@ -27,8 +36,7 @@ class Features(object):
 
     def __init__(self, path):
         """
-        Cut all wav vectors to the same length to enforce uniformity.
-        :param raw_audio_tuple:
+        :param path: str. Path to sound file (*.wav, *.ogg).
         """
         self.path = path
         self.raw = None
@@ -57,7 +65,8 @@ class Features(object):
         raw = raw[:self.TRUNCLENGTH]
 
         if len(raw) < self.TRUNCLENGTH:
-            logging.info(f"Not featurizing {self.path} because vector is too short.")
+            logging.info(f"Not featurizing {self.path} because raw vector is "
+                         f"too short.")
             return self
 
         logging.info('Computing Zero Crossing Rate...')
@@ -130,7 +139,7 @@ class Features(object):
 
         self.raw = raw.reshape(1, -1)
 
-        self.vec = np.mean(mat, axis=1, keepdims=True).reshape(1,-1)
+        self.vec = np.mean(mat, axis=1, keepdims=True).reshape(1, -1)
 
         logging.debug(f'Vec shape: {self.vec.shape}')
 
