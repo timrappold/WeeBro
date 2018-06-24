@@ -19,11 +19,14 @@ from sklearn.model_selection import GridSearchCV
 
 import training_data
 import features
+import lib
 
 importlib.reload(training_data)
 importlib.reload(features)
 
 #logging.basicConfig(level=logging.DEBUG)
+
+MODEL_DIR = './trained_models/'
 
 
 def get_scaler_svc():
@@ -49,6 +52,12 @@ def get_scaler_svc():
     X_test_scaled = scaler.transform(X_test)
     y_pred = clf.predict(X_test_scaled)
     print(classification_report(y_test, y_pred))
+
+    trained_model = {'clf': clf,
+                     'scaler': scaler,
+                     'classification_report': classification_report}
+
+    lib.dump_to_pickle(trained_model, MODEL_DIR + 'scaler_svc.pkl')
 
     return scaler, clf, classification_report
 

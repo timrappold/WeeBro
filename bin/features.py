@@ -131,8 +131,8 @@ class Features(object):
         stop = timeit.default_timer()
         logging.info('Time taken: {0}'.format(stop - start))
 
-
         return self
+
 
 if __name__ == '__main__':
 
@@ -150,10 +150,5 @@ if __name__ == '__main__':
                 logging.debug(f'Vec: {f.vec.shape}')
                 logging.debug(f'Mat: {f.mat.shape}')
             else:
-                logging.debug(f"Did not featurize {file} because it is too short.")
-
-            #prediction_results.append((file, predict2(folder + file, grid)))
-
-
-
-
+                logging.debug(f"Did not featurize {file} because it is too "
+                              f"short.")

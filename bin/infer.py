@@ -5,10 +5,22 @@ import importlib
 import train_model
 import training_data
 import features
+import lib
+
 
 importlib.reload(train_model)
 importlib.reload(training_data)
 importlib.reload(features)
+
+
+MODEL_DIR = './trained_models/'
+
+
+def get_trained_model(file=MODEL_DIR+'scaler_svc.pkl'):
+    trained_model = lib.load_pickle(file)
+    scaler = trained_model['scaler']
+    clf = trained_model['clf']
+    return scaler, clf
 
 
 def infer(vec, clf, scaler=None):
@@ -80,7 +92,19 @@ def infer_livestream(clf, scaler=None):
 
     return livestream_predictions
 
+
+def main():
+
+    scaler, clf = get_trained_model(file=MODEL_DIR + 'scaler_svc.pkl')
+
+    infer_training_data(clf, scaler=scaler)
+
+    pass
+
+
 if __name__ == '__main__':
+
+    main()
 
     #print('Training data:')
     #infer_training_data(clf, scaler=scaler)
@@ -88,11 +112,11 @@ if __name__ == '__main__':
     #print('Test files:')
     #infer_test_files(clf, scaler=scaler)
 
-    print('Livestream data:')
+    #print('Livestream data:')
 
-    scaler, clf, classification_report = train_model.main()
+    #scaler, clf, classification_report = train_model.main()
 
-    predictions = infer_livestream(clf, scaler=scaler)
+    #predictions = infer_livestream(clf, scaler=scaler)
 
 
 
