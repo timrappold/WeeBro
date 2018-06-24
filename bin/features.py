@@ -61,72 +61,51 @@ class Features(object):
         :return: a numpy array (numOfFeatures x numOfShortTermWindows)
         """
 
+        start = timeit.default_timer()
+
+        logging.debug('Loading Librosa raw audio vector...')
+
         raw, _ = librosa.load(self.path, sr=self.RATE, mono=True)
         raw = raw[:self.TRUNCLENGTH]
 
         if len(raw) < self.TRUNCLENGTH:
             logging.info(f"Not featurizing {self.path} because raw vector is "
-                         f"too short.")
+                         f"too short. `None` will be returned for all data "
+                         f"formats.")
             return self
 
-        logging.info('Computing Zero Crossing Rate...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing Zero Crossing Rate...')
         zcr_feat = zero_crossing_rate(y=raw,
                                       hop_length=self.FRAME)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
-
-        logging.info('Computing RMSE ...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing RMSE ...')
         rmse_feat = rmse(y=raw, hop_length=self.FRAME)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
-
-        logging.info('Computing MFCC...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing MFCC...')
         mfcc_feat = mfcc(y=raw,
                          sr=self.RATE,
                          n_mfcc=self.N_MFCC)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
 
-        logging.info('Computing spectral centroid...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing spectral centroid...')
         spectral_centroid_feat = spectral_centroid(y=raw,
                                                    sr=self.RATE,
                                                    hop_length=self.FRAME)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
 
-        logging.info('Computing spectral roll-off ...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing spectral roll-off ...')
         spectral_rolloff_feat = spectral_rolloff(y=raw,
                                                  sr=self.RATE,
                                                  hop_length=self.FRAME,
                                                  roll_percent=0.90)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
 
-        logging.info('Computing spectral bandwidth...')
-        start = timeit.default_timer()
-
+        logging.debug('Computing spectral bandwidth...')
         spectral_bandwidth_feat = spectral_bandwidth(y=raw,
                                                      sr=self.RATE,
                                                      hop_length=self.FRAME)
 
-        stop = timeit.default_timer()
-        logging.info('Time taken: {0}'.format(stop - start))
-
+        logging.debug('Concatenate all features...')
         mat = np.concatenate((zcr_feat,
                               rmse_feat,
                               spectral_centroid_feat,
@@ -137,14 +116,21 @@ class Features(object):
 
         logging.debug(f'Mat shape: {mat.shape}')
 
+        logging.debug(f'Create self.raw...')
         self.raw = raw.reshape(1, -1)
 
+        logging.debug(f'Create self.vec by averaging mat along time dim...')
         self.vec = np.mean(mat, axis=1, keepdims=True).reshape(1, -1)
 
         logging.debug(f'Vec shape: {self.vec.shape}')
 
+        logging.debug(f'Create self.mat...')
         assert mat.shape == (18, 426), 'Matrix dims do not match (426,18)'
         self.mat = mat.reshape(1, 18, 426,)
+
+        stop = timeit.default_timer()
+        logging.info('Time taken: {0}'.format(stop - start))
+
 
         return self
 
