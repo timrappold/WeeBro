@@ -5,6 +5,7 @@ __pycache__/
 
 .idea/
 train_test_sets.pkl
+*.mp4
 *.wav
 *.ogg
 
