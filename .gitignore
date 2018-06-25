@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 .idea/
-data/
+train_test_sets.pkl
 *.wav
 *.ogg
 
