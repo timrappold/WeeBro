@@ -6,9 +6,8 @@ import importlib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
-from sklearn.metrics import log_loss, accuracy_score, classification_report, roc_auc_score
+from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
 
-from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 
 from sklearn.pipeline import Pipeline
