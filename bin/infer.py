@@ -71,43 +71,29 @@ def infer_test_files(infer):
             print(file, ': ', prediction)
 
 
-
-# def infer_test_files(clf, scaler=None):
-#     test_folder = '../data/unit_test_data/'
-#
-#     for file in os.listdir(test_folder):
-#         if file != '.DS_Store':
-#             f = features.Features(test_folder + file)
-#             f.featurize()
-#
-#             if f.raw is not None:
-#                 print(f'\nNew file: {file}')
-#                 logging.debug(f'Raw: {f.raw.shape}')
-#                 #print(f'Vec: {f.vec.shape}')
-#                 logging.debug(f'Mat: {f.mat.shape}')
-#
-#                 prediction = infer(f.vec, clf, scaler=scaler)
-#
-#                 print(f'Prediction: {prediction}')
-#
-#             else:
-#                 logging.debug(f"Did not featurize {file} because it is too short.")
-
-
 def infer_training_data(clf, scaler=None):
+    """
+    A simple test function that only outputs print statements.
+    :param clf:
+    :param scaler:
+    :return: None.
+    """
 
     training_data_ = training_data.get_training_data_dict()
 
     for sample in training_data_['vec']:
-
-        #print(sample.shape)
         print(infer(sample.reshape(1, -1), clf, scaler=scaler))
 
     pass
 
 
 def infer_livestream(infer):
-    test_folder = '../data/live_stream_conversions/'
+    """
+
+    :param infer:
+    :return:
+    """
+    # test_folder = '../data/live_stream_conversions/'
     test_folder = '../data/dummy_live_stream_conversions/'
 
     livestream_predictions = []
