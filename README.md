@@ -1,2 +1,2 @@
 # WeeBro
-A baby monitor that tracks crying
+A baby monitor that tracks crying.
